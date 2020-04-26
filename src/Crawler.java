@@ -27,9 +27,13 @@ public class Crawler {
     	workingSetOfNodes = new ArrayList<>();
     	String currentUrl;
     	int i = 1;
-    	while(listOfSubreddits.size() < maxPagesToVisit) {
-    		if(pagesToVisit.isEmpty()) {currentUrl = url;}
-    		else {currentUrl = this.nextUrl();}
+    	while (listOfSubreddits.size() < maxPagesToVisit) {
+    		if (pagesToVisit.isEmpty()) {
+    			currentUrl = url;
+    		}
+    		else {
+    			currentUrl = this.nextUrl();
+    		}
 
 	    	int index = currentUrl.indexOf("/",25);
 	    	String subredditName = currentUrl.substring(25,index);
@@ -45,11 +49,11 @@ public class Crawler {
     	if (pagesNotVisited > 0) {
             System.out.println("The crawler was unable to visit " + pagesNotVisited +" link(s) due to not being a valid subreddit.");
         }
-    	for(SubRedditNode e : workingSetOfNodes) {
+    	for (SubRedditNode e : workingSetOfNodes) {
     		e.printLinksToSubreddits();
     		System.out.println("\n");
     	}
-    	for(SubRedditNode e : workingSetOfNodes) {
+    	for (SubRedditNode e : workingSetOfNodes) {
     		e.printLinksFromSubreddits();
     		System.out.println("\n");
     	}
@@ -57,9 +61,9 @@ public class Crawler {
     
     private void calculateInLinks(ArrayList<SubRedditNode> workingSetOfNodes2) {
     	for(SubRedditNode node : workingSetOfNodes2) {
-    		for(String s : node.getlinksToSubreddits()) {
-    			for(SubRedditNode node2 : workingSetOfNodes2) {
-    				if(node2.getsubredditName().equals(s)) {
+    		for (String s : node.getlinksToSubreddits()) {
+    			for (SubRedditNode node2 : workingSetOfNodes2) {
+    				if (node2.getsubredditName().equals(s)) {
     					node2.setnumOfInLinks(node2.getnumOfInLinks() + 1);
     					node2.addInLinkSubreddit(node.getsubredditName());
     				}
@@ -74,15 +78,23 @@ public class Crawler {
 		do {
 			canCrawl = true;
             nextUrl = this.pagesToVisit.remove(0);
-            if(nextUrl.length() < 25) {canCrawl = false;pagesNotVisited++;}
-            else if(!nextUrl.substring(0, 25).equals("https://www.reddit.com/r/")){canCrawl = false;pagesNotVisited++;}
+            if (nextUrl.length() < 25) {
+            	canCrawl = false;pagesNotVisited++;
+            }
+            else if (!nextUrl.substring(0, 25).equals("https://www.reddit.com/r/")){
+            	canCrawl = false;pagesNotVisited++;
+            }
             else {
             	int index = nextUrl.indexOf("/",25);
-            	if(index == -1) {canCrawl = false;pagesNotVisited++;}
+            	if (index == -1) {
+            		canCrawl = false;pagesNotVisited++;
+            	}
             	else {
             		String subredditName = nextUrl.substring(25,index);
-        			for(String subreddit : listOfSubreddits) {
-        				if(subredditName.equals(subreddit)) {canCrawl = false;pagesNotVisited++;}
+        			for (String subreddit : listOfSubreddits) {
+        				if (subredditName.equals(subreddit)) {
+        					canCrawl = false;pagesNotVisited++;
+        				}
         			}
             	}
             }
