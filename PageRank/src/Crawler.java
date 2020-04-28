@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 public class Crawler {
 	private final int maxPagesToVisit;
     private int pagesNotVisited;
-    private Set<String> pagesVisited = new HashSet<>();
+    private List<String> pagesVisited = new LinkedList<>();
     private List<String> pagesToVisit = new LinkedList<>();
     private List<String> links = new LinkedList<>();
     private static final String WEB_BROWSER = "Chrome-Chrome OS";
@@ -27,9 +27,13 @@ public class Crawler {
     	workingSetOfNodes = new ArrayList<>();
     	String currentUrl;
     	int i = 1;
-    	while(listOfSubreddits.size() < maxPagesToVisit) {
-    		if(pagesToVisit.isEmpty()) {currentUrl = url;}
-    		else {currentUrl = this.nextUrl();}
+    	while (listOfSubreddits.size() < maxPagesToVisit) {
+    		if (pagesToVisit.isEmpty()) {
+    			currentUrl = url;
+    		}
+    		else {
+    			currentUrl = this.nextUrl();
+    		}
 
 	    	int index = currentUrl.indexOf("/",25);
 	    	String subredditName = currentUrl.substring(25,index);
@@ -37,18 +41,24 @@ public class Crawler {
 	    	
 	    	crawl(i, currentUrl.substring(0, index+1));
 	    	this.pagesToVisit.addAll(getLinks());
-	    	workingSetOfNodes.add(new SubRedditNode(subredditName,getLinks()));
-	    	i++;		
+			workingSetOfNodes.add(new SubRedditNode(subredditName, getLinks()));
+	    	i++;
     	}
+
     	calculateInLinks(workingSetOfNodes);
     	
     	if (pagesNotVisited > 0) {
-            System.out.println("The crawler was unable to visit " + pagesNotVisited +" link(s) due to not being a valid subreddit.");
+            System.out.println("\nThe crawler was unable to visit " + pagesNotVisited +" link(s) due to not being a valid subreddit.");
+            System.out.println("The visited links are: " + Arrays.toString(listOfSubreddits.toArray()) +"\n");
         }
+
     	for(SubRedditNode e : workingSetOfNodes) {
     		e.printLinksToSubreddits();
     		System.out.println("\n");
     	}
+
+    	System.out.println("** Links FROM Subreddits **\n");
+
     	for(SubRedditNode e : workingSetOfNodes) {
     		e.printLinksFromSubreddits();
     		System.out.println("\n");
@@ -56,10 +66,11 @@ public class Crawler {
     }
     
     private void calculateInLinks(ArrayList<SubRedditNode> workingSetOfNodes2) {
-    	for(SubRedditNode node : workingSetOfNodes2) {
-    		for(String s : node.getlinksToSubreddits()) {
-    			for(SubRedditNode node2 : workingSetOfNodes2) {
-    				if(node2.getsubredditName().equals(s)) {
+    	for (SubRedditNode node : workingSetOfNodes2) {
+    		node.filterLinksToSubreddits(listOfSubreddits);
+    		for (String s : node.getlinksToSubreddits()) {
+    			for (SubRedditNode node2 : workingSetOfNodes2) {
+    				if (node2.getsubredditName().equals(s)) {
     					node2.setnumOfInLinks(node2.getnumOfInLinks() + 1);
     					node2.addInLinkSubreddit(node.getsubredditName());
     				}
@@ -74,15 +85,27 @@ public class Crawler {
 		do {
 			canCrawl = true;
             nextUrl = this.pagesToVisit.remove(0);
-            if(nextUrl.length() < 25) {canCrawl = false;pagesNotVisited++;}
-            else if(!nextUrl.substring(0, 25).equals("https://www.reddit.com/r/")){canCrawl = false;pagesNotVisited++;}
+            if (nextUrl.length() < 25) {
+            	canCrawl = false;
+            	pagesNotVisited++;
+            }
+            else if (!nextUrl.substring(0, 25).equals("https://www.reddit.com/r/")){
+            	canCrawl = false;
+            	pagesNotVisited++;
+            }
             else {
             	int index = nextUrl.indexOf("/",25);
-            	if(index == -1) {canCrawl = false;pagesNotVisited++;}
+            	if (index == -1) {
+            		canCrawl = false;
+            		pagesNotVisited++;
+            	}
             	else {
             		String subredditName = nextUrl.substring(25,index);
-        			for(String subreddit : listOfSubreddits) {
-        				if(subredditName.equals(subreddit)) {canCrawl = false;pagesNotVisited++;}
+        			for (String subreddit : listOfSubreddits) {
+        				if (subredditName.equals(subreddit)) {
+        					canCrawl = false;
+        					pagesNotVisited++;
+        				}
         			}
             	}
             }
@@ -93,7 +116,6 @@ public class Crawler {
 
     public void crawl(int siteNumber, String url) // Makes an HTTP request for a given url
     {
-    	
         try {
             Connection connection = Jsoup.connect(url).userAgent(WEB_BROWSER);
             Document htmlDocument = connection.get();
@@ -107,8 +129,9 @@ public class Crawler {
 
             Elements linksOnPage = htmlDocument.select("a[href]");
             
-            for (Element link : linksOnPage) {this.links.add(link.absUrl("href"));}
-            
+            for (Element link : linksOnPage) {
+            	this.links.add(link.absUrl("href"));
+            }
         } catch (IOException e) {
             System.out.println("Error in out HTTP request " + e);
         } catch (IllegalArgumentException e) {
@@ -116,7 +139,7 @@ public class Crawler {
         }
     }
 
-    public List<String> getLinks()// Returns a list of all the URLs on the page
+    public List<String> getLinks() // Returns a list of all the URLs on the page
     {
         return this.links;
     }
