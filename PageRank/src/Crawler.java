@@ -27,7 +27,8 @@ public class Crawler {
     	workingSetOfNodes = new ArrayList<>();
     	String currentUrl;
     	int i = 1;
-    	while (listOfSubreddits.size() < maxPagesToVisit) {
+	boolean zeroSubs = false;
+    	while ((listOfSubreddits.size() < maxPagesToVisit) && (zeroSubs == false)) {
     		if (pagesToVisit.isEmpty()) {
     			currentUrl = url;
     		}
@@ -43,6 +44,9 @@ public class Crawler {
 	    	this.pagesToVisit.addAll(getLinks());
 			workingSetOfNodes.add(new SubRedditNode(subredditName, getLinks()));
 	    	i++;
+		if (pagesToVisit.get(0).equals("https://www.reddit.com/") && i > 2) { // Added
+    			zeroSubs = true;
+    		}
     	}
 
     	calculateInLinks(workingSetOfNodes);
@@ -109,7 +113,7 @@ public class Crawler {
         			}
             	}
             }
-        } while (canCrawl == false);
+        } while (canCrawl == false && !pagesToVisit.isEmpty());
         this.pagesVisited.add(nextUrl);
         return nextUrl;
 	}
@@ -137,6 +141,11 @@ public class Crawler {
         } catch (IllegalArgumentException e) {
             System.out.println("Error: Invalid URL");
         }
+    }
+	
+    public void printPageRank() {
+    	PageRank rank = new PageRank(workingSetOfNodes);
+    	rank.printRanks(workingSetOfNodes);
     }
 
     public List<String> getLinks() // Returns a list of all the URLs on the page
