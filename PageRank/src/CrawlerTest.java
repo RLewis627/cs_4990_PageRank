@@ -21,6 +21,7 @@ public class CrawlerTest {
         String searchSite = "https://www.reddit.com/r/"+subredditName+"/";
 
         crawler.search(searchSite);
+	crawler.printPageRank();
 	}
 
 }
