@@ -46,6 +46,10 @@ public class SubRedditNode implements Comparable<SubRedditNode> {
 		return numOfInLinks;
 	}
 	
+	public int getNumOutLinks() {
+		return numOfOutlinks;
+	}
+	
 	public String getFromName(int num) {
 		return linksFromSubreddits.get(num);
 	}
