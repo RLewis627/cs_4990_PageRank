@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubRedditNode {
+public class SubRedditNode implements Comparable<SubRedditNode> {
 	//public String Url;
 	//public final String BASE_URL = "https://www.reddit.com/r/";
 	private List<String> linksToSubreddits = new ArrayList<>();
 	private List<String> linksToSubredditsFiltered = new ArrayList<>();
 	private List<String> linksFromSubreddits = new ArrayList<>();
+	private float pageRank;
 	private String subredditName;
 	private int numOfOutlinks;
 	private int numOfInLinks;
@@ -25,6 +26,14 @@ public class SubRedditNode {
 		numOfInLinks = i;
 	}
 	
+	public void setPageRank(float num) {
+		pageRank = num;
+	}
+	
+	public float getPageRank() {
+		return pageRank;
+	}
+	
 	public String getsubredditName() {
 		return subredditName;
 	}
@@ -35,6 +44,10 @@ public class SubRedditNode {
 
 	public int getnumOfInLinks() {
 		return numOfInLinks;
+	}
+	
+	public String getFromName(int num) {
+		return linksFromSubreddits.get(num);
 	}
 	
 	public void addInLinkSubreddit(String s) {
@@ -108,5 +121,13 @@ public class SubRedditNode {
 				System.out.printf(subreddit+" ");
 			}
 		}
+	}
+	
+	@Override
+	public int compareTo(SubRedditNode node) {
+		if (this.pageRank >= node.pageRank) {
+			return -1;
+		}
+		return 1;
 	}
 }
