@@ -1,6 +1,6 @@
-##Compile:
+## Compile:
     javac -cp PageRank\lib\*.jar -d out\production\PageRank PageRank\src\*.java
-##Execute:
+## Execute:
     java -cp PageRank\lib\*;out\ PageRank\src\CrawlerTest.java
     OR 
     java -cp PageRank\lib\*;out\production\PageRank PageRank\src\CrawlerTest.java [NUMBER] [SUBREDDIT]
