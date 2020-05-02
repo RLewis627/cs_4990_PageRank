@@ -1,9 +1,9 @@
 ## Compile:
-    javac -cp PageRank\lib\*.jar -d out\production\PageRank PageRank\src\*.java
+    javac -cp "PageRank\lib\*.jar" -d out\production\PageRank PageRank\src\*.java
 ## Execute:
-    java -cp PageRank\lib\*;out\production\PageRank PageRank\src\CrawlerTest.java
+    java -cp "PageRank\lib\*;out\production\PageRank" PageRank\src\CrawlerTest.java
     OR 
-    java -cp PageRank\lib\*;out\production\PageRank PageRank\src\CrawlerTest.java [NUMBER] [SUBREDDIT]
+    java -cp "PageRank\lib\*;out\production\PageRank" PageRank\src\CrawlerTest.java [NUMBER] [SUBREDDIT]
     
 ## Arguments:
     Prompt user for number of sites input
