@@ -21,7 +21,7 @@ public class PageRank {
 
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getnumOfInLinks() != 0) {
-                    float tempRank = 0;
+                    double tempRank = 0;
                     for (int j = 0; j < list.get(i).getnumOfInLinks(); j++) {
                         String name = list.get(i).getFromName(j);
                         tempRank += calculate(list, name);
@@ -39,7 +39,7 @@ public class PageRank {
     private double calculate(List<SubRedditNode> list, String name) {
         for (SubRedditNode subRedditNode : list) {
             if (name.equals(subRedditNode.getsubredditName())) {
-                int in = subRedditNode.getnumOfInLinks();
+                double pR = subRedditNode.getPageRank();
                 int out = subRedditNode.getNumOutLinks();
                 return (double) in / out;
             }
