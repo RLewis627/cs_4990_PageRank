@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubRedditNode {
-	//public String Url;
-	//public final String BASE_URL = "https://www.reddit.com/r/";
 	private List<String> linksToSubreddits = new ArrayList<>();
 	private List<String> linksFromSubreddits = new ArrayList<>();
 	private String subredditName;
