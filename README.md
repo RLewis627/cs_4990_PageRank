@@ -1,9 +1,14 @@
+## Requirements
+    JDK 1.8 or above must be installed
+    JDK bin set as PATH
+    
 ## Compile:
     javac -cp PageRank\lib\*.jar -d out\production\PageRank PageRank\src\*.java
+    
 ## Execute:
-    java -cp PageRank\lib\*;out\ PageRank\src\CrawlerTest.java
+    java -cp "PageRank\lib\*;out\production\PageRank" PageRank\src\CrawlerTest.java
     OR 
-    java -cp PageRank\lib\*;out\production\PageRank PageRank\src\CrawlerTest.java [NUMBER] [SUBREDDIT]
+    java -cp "PageRank\lib\*;out\production\PageRank" PageRank\src\CrawlerTest.java [NUMBER] [SUBREDDIT]
     
 ## Arguments:
     Prompt user for number of sites input
