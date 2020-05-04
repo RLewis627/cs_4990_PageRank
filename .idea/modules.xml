@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/PageRank/PageRank.iml" filepath="$PROJECT_DIR$/PageRank/PageRank.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/cs_4990_PageRank[FORK].iml" filepath="$PROJECT_DIR$/.idea/cs_4990_PageRank[FORK].iml" />
+    </modules>
+  </component>
+</project>
