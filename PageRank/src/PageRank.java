@@ -41,7 +41,7 @@ public class PageRank {
             if (name.equals(subRedditNode.getsubredditName())) {
                 double pR = subRedditNode.getPageRank();
                 int out = subRedditNode.getNumOutLinks();
-                return (double) in / out;
+                return pR / out;
             }
         }
         return -1;
