@@ -17,9 +17,10 @@ public class SubRedditNode implements Comparable<SubRedditNode> {
         LinksToOtherSubreddits(links);
     }
 
-    SubRedditNode(String name, double pageRank) {
+    SubRedditNode(String name, double pageRank, int numOfOutlinks) {
         this.pageRank = pageRank;
         subredditName = name;
+        this.numOfOutlinks = numOfOutlinks;
     }
 
     public void setlinksFromSubreddits(List<String> internalList) {
