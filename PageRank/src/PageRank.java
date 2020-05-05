@@ -70,7 +70,7 @@ public class PageRank {
 
     public void printRanks(List<SubRedditNode> list) {
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.size() - i + " " + list.get(i).getsubredditName());
+            System.out.println(list.size() - i + " " + list.get(i).getsubredditName() + ": " + list.get(i).getPageRank());
         }
     }
 }
