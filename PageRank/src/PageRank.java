@@ -20,8 +20,8 @@ public class PageRank {
         double initialRank = 1.0 / list.size();
 
         for (int i = 0; i < list.size(); i++) {
-            lastIterationRank.add(new SubRedditNode(list.get(i).getsubredditName(), initialRank));
-            currentIterationRank.add(new SubRedditNode(list.get(i).getsubredditName(), initialRank));
+            lastIterationRank.add(new SubRedditNode(list.get(i).getsubredditName(), initialRank, list.get(i).getNumOutLinks()));
+		    currentIterationRank.add(new SubRedditNode(list.get(i).getsubredditName(), initialRank, list.get(i).getNumOutLinks()));
         }
 
         int iterations = 2;
