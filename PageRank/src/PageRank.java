@@ -24,7 +24,7 @@ public class PageRank {
 		    currentIterationRank.add(new SubRedditNode(list.get(i).getsubredditName(), initialRank, list.get(i).getNumOutLinks()));
         }
 
-        int iterations = 2;
+        int iterations = 10;
 
         while (iterations > 0) {
 

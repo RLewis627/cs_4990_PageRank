@@ -7,6 +7,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * Authors: Rachel Lewis
+ *          Samuel Belarmino
+ *          Josh Woolbright
+ *          Auraiporn Auksorn
+ *          Daniel Santana
+ */
+
 public class Crawler {
     private final int maxPagesToVisit;
     private int pagesNotVisited;
@@ -29,6 +37,15 @@ public class Crawler {
         int i = 1;
         boolean zeroSubs = false;
         while ((listOfSubreddits.size() < maxPagesToVisit) && (!zeroSubs)) {
+
+            //Sleep the main thread for 1 second
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("The main thread was interrupted!");
+                System.exit(1);
+            }
+
             if (pagesToVisit.isEmpty()) {
                 currentUrl = url;
             } else {
@@ -39,6 +56,7 @@ public class Crawler {
             String subredditName = currentUrl.substring(25, index);
             listOfSubreddits.add(subredditName);
 
+            //visit & crawl the site
             crawl(i, currentUrl.substring(0, index + 1));
             this.pagesToVisit.addAll(getLinks());
             workingSetOfNodes.add(new SubRedditNode(subredditName, getLinks()));

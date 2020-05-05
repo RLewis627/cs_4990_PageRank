@@ -39,5 +39,4 @@ public class CrawlerTest {
         crawler.search(searchSite);
         crawler.printPageRank();
     }
-
 }
